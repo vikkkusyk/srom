@@ -1,0 +1,4 @@
+/code/bigint/*
+!/code/bigint/*.h
+!/code/bigint/*.cpp
+/code/bigint/*/
