@@ -36,5 +36,8 @@ public:
     BigInt shiftBitsHigh(int shift) const;
     BigInt shiftBitsLow(int shift) const;
 
+    BigInt operator*(uint32_t other) const;
+    BigInt operator*(const BigInt& other) const;
+
     friend ostream& operator<<(ostream& os, const BigInt& num);
 };

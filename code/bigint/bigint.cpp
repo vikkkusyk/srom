@@ -99,9 +99,7 @@ BigInt BigInt::operator+(const BigInt& other) const
 
     for (size_t i = 0; i < WORDS; ++i)
     {
-        uint64_t temp = static_cast<uint64_t>(words[i])
-            + other.words[i] + carry;
-
+        uint64_t temp = static_cast<uint64_t>(words[i]) + other.words[i] + carry;
         result.words[i] = static_cast<uint32_t>(temp & 0xFFFFFFFF);
         carry = static_cast<uint32_t>(temp >> 32);
     }
@@ -116,8 +114,7 @@ BigInt BigInt::operator-(const BigInt& other) const
 
     for (size_t i = 0; i < WORDS; ++i)
     {
-        int64_t temp = static_cast<int64_t>(words[i])
-            - other.words[i] - borrow;
+        int64_t temp = static_cast<int64_t>(words[i]) - other.words[i] - borrow;
 
         if (temp >= 0)
         {
@@ -237,8 +234,7 @@ BigInt BigInt::shiftBitsHigh(int shift) const
     {
         uint32_t current = words[i];
 
-        result.words[i + wordShift] =
-            (bitShift == 0 ? current : (current << bitShift)) | carry;
+        result.words[i + wordShift] = (bitShift == 0 ? current : (current << bitShift)) | carry;
 
         carry = (bitShift == 0 ? 0 : (current >> (32 - bitShift)));
     }
@@ -269,10 +265,50 @@ BigInt BigInt::shiftBitsLow(int shift) const
     {
         uint32_t current = words[i];
 
-        result.words[i - wordShift] =
-            (bitShift == 0 ? current : (current >> bitShift)) | carry;
+        result.words[i - wordShift] = (bitShift == 0 ? current : (current >> bitShift)) | carry;
 
         carry = (bitShift == 0 ? 0 : (current << (32 - bitShift)));
+    }
+
+    return result;
+}
+
+BigInt BigInt::operator*(uint32_t other) const
+{
+    BigInt result;
+    uint32_t carry = 0;
+
+    for (size_t i = 0; i < WORDS; ++i)
+    {
+        uint64_t temp = static_cast<uint64_t>(words[i]) * other + carry;
+
+        result.words[i] = static_cast<uint32_t>(temp & 0xFFFFFFFF);
+        carry = static_cast<uint32_t>(temp >> 32);
+    }
+
+    return result;
+}
+
+BigInt BigInt::operator*(const BigInt& other) const
+{
+    BigInt result;
+
+    for (size_t i = 0; i < WORDS; ++i)
+    {
+        if (words[i] == 0)
+        {
+            continue;
+        }
+
+        uint32_t carry = 0;
+
+        for (size_t j = 0; j < WORDS - i; ++j)
+        {
+            uint64_t temp = static_cast<uint64_t>(result.words[i + j]) + static_cast<uint64_t>(words[i]) * other.words[j] + carry;
+
+                result.words[i + j] = static_cast<uint32_t>(temp & 0xFFFFFFFF);
+                carry = static_cast<uint32_t>(temp >> 32);
+        }
     }
 
     return result;

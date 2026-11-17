@@ -40,5 +40,14 @@ int main()
     BigInt shiftedLow = shiftedHigh.shiftBitsLow(4);
     cout << "Shifted number >> 4 = " << shiftedLow << "\n";
 
+    BigInt e("12345678");
+    BigInt f("ABCDEF");
+
+    cout << "\nMultiplication:\n";
+    cout << "E = " << e << "\n";
+    cout << "F = " << f << "\n";
+    cout << "E * 5 = " << (e * 5) << "\n";
+    cout << "E * F = " << (e * f) << "\n\n";
+
     return 0;
 }
