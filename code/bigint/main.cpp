@@ -5,21 +5,40 @@ using namespace std;
 
 int main()
 {
-    BigInt a(0);
-    BigInt b(1);
-    BigInt c(4096);
-    BigInt d(30042007);
+    BigInt a("123456789ABCDEF0");
+    BigInt b("1111111111111111");
 
-    BigInt e("1A2B3C4D");
-    BigInt f("123456789ABCDEF");
+    cout << "A = " << a << "\n";
+    cout << "B = " << b << "\n\n";
 
-    cout << "0: " << a << endl;
-    cout << "1: " << b << endl;
-    cout << "4096: " << c << endl;
-    cout << "30042007: " << d << endl;
+    cout << "Addition:\n";
+    cout << "A + B = " << (a + b) << "\n\n";
 
-    cout << "hex1: " << e << endl;
-    cout << "hex2: " << f << endl;
+    cout << "Subtraction:\n";
+    cout << "A - B = " << (a - b) << "\n\n";
+
+    BigInt c("ABC");
+    BigInt d("123");
+
+    cout << "Comparison:\n";
+    cout << "C = " << c << "\n";
+    cout << "D = " << d << "\n";
+    cout << "C < D:  " << (c < d) << "\n";
+    cout << "C > D:  " << (c > d) << "\n";
+    cout << "C == D: " << (c == d) << "\n";
+    cout << "C != D: " << (c != d) << "\n\n";
+
+    BigInt testNum("2D");
+
+    cout << "Bit operations:\n";
+    cout << "Number = " << testNum << "\n";
+    cout << "Bit length = " << testNum.bitLength() << "\n";
+
+    BigInt shiftedHigh = testNum.shiftBitsHigh(4);
+    cout << "Number << 4 = " << shiftedHigh << "\n";
+
+    BigInt shiftedLow = shiftedHigh.shiftBitsLow(4);
+    cout << "Shifted number >> 4 = " << shiftedLow << "\n";
 
     return 0;
 }

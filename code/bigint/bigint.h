@@ -9,15 +9,32 @@ using namespace std;
 class BigInt
 {
 public:
-    static constexpr size_t WORDS = 32;
+    static constexpr size_t WORDS = 64;
 
-    array<uint64_t, WORDS> words{};
+    array<uint32_t, WORDS> words{};
 
     BigInt();
-    BigInt(uint64_t value);
+    BigInt(uint32_t value);
     BigInt(const string& hex);
 
     string toHex() const;
+
+    BigInt operator+(const BigInt& other) const;
+    BigInt operator-(const BigInt& other) const;
+
+    int compare(const BigInt& other) const;
+
+    bool operator<(const BigInt& other) const;
+    bool operator>(const BigInt& other) const;
+    bool operator<=(const BigInt& other) const;
+    bool operator>=(const BigInt& other) const;
+    bool operator==(const BigInt& other) const;
+    bool operator!=(const BigInt& other) const;
+
+    int bitLength() const;
+
+    BigInt shiftBitsHigh(int shift) const;
+    BigInt shiftBitsLow(int shift) const;
 
     friend ostream& operator<<(ostream& os, const BigInt& num);
 };
